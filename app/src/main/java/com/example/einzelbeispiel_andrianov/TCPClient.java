@@ -18,8 +18,6 @@ public class TCPClient extends Thread {
 
         BufferedReader inFormServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
-        matrikelNummer = inFormUser.readLine();
-
         outputStream.writeBytes(matrikelNummer + '\n');
         modifiedSentence = inFormServer.readLine();
 
