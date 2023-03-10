@@ -2,7 +2,6 @@ package com.example.einzelbeispiel_andrianov;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.StrictMode;
 import android.view.View;
 import android.widget.Button;
@@ -13,8 +12,10 @@ import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
     private TextView resultText;
+    private TextView resultTextQuer;
     private EditText editText;
     private Button sendBtn;
+    private Button calculateBtn;
 
 
     @Override
@@ -27,9 +28,11 @@ public class MainActivity extends AppCompatActivity {
 
         TCPClient client = new TCPClient();
 
-        resultText = findViewById(R.id.textViewResult);
         editText = findViewById(R.id.editTextNumber);
-        sendBtn = findViewById(R.id.button5);
+        resultText = findViewById(R.id.textViewResult);
+        sendBtn = findViewById(R.id.sendBtn);
+        calculateBtn = findViewById(R.id.calculateBtn);
+        resultTextQuer = findViewById(R.id.resultQuerText);
 
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,8 +40,23 @@ public class MainActivity extends AppCompatActivity {
                 String result = editText.getText().toString();
 
                 try {
-                    String response = client.runServer(String.valueOf(Integer.parseInt(result)));
+                    String response = client.run(String.valueOf(Integer.parseInt(result)));
                     resultText.setText(response);
+                    System.out.println("Response: " + response);
+                } catch (Exception e){
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+        calculateBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                String resultQuer = editText.getText().toString();
+
+                try {
+                    String querResponse = client.calculateQuerSum(String.valueOf(Integer.parseInt(resultQuer)));
+                    resultTextQuer.setText(querResponse);
                 } catch (Exception e){
                     throw new RuntimeException(e);
                 }

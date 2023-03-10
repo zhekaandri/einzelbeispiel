@@ -8,10 +8,8 @@ import java.net.Socket;
 
 public class TCPClient extends Thread {
 
-    public String runServer(String matrikelNummer) throws IOException {
+    public String run(String matrikelNummer) throws IOException {
         String modifiedSentence;
-        BufferedReader inFormUser = new BufferedReader(new InputStreamReader(System.in));
-
         Socket clientSocket = new Socket("se2-isys.aau.at", 53212);
 
         DataOutputStream outputStream = new DataOutputStream(clientSocket.getOutputStream());
@@ -26,5 +24,30 @@ public class TCPClient extends Thread {
         clientSocket.close();
 
         return modifiedSentence;
+    }
+
+    public String calculateQuerSum(String matrikelNummer){
+        try {
+            int sum = 0;
+            char indexNum;
+
+            for (int i = 0; i < matrikelNummer.length(); i++){
+                indexNum = matrikelNummer.charAt(i);
+
+                if (i % 2 == 0){
+                    sum = sum + Integer.parseInt(String.valueOf(indexNum));
+                } else {
+                    sum = sum - Integer.parseInt(String.valueOf(indexNum));
+                }
+            }
+
+            if (sum % 2 == 0){
+                return "Quersumme " + sum + " ist gerade.";
+            } else {
+                return "Quersumme " + sum + " ist ungerade.";
+            }
+        } catch (Exception e){
+            throw new RuntimeException(e);
+        }
     }
 }
