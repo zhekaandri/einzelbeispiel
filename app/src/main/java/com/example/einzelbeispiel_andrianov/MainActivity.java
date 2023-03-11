@@ -8,8 +8,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.io.IOException;
-
 public class MainActivity extends AppCompatActivity {
     private TextView resultText;
     private TextView resultTextQuer;
@@ -42,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     String response = client.run(String.valueOf(Integer.parseInt(result)));
                     resultText.setText(response);
-                    System.out.println("Response: " + response);
                 } catch (Exception e){
                     throw new RuntimeException(e);
                 }

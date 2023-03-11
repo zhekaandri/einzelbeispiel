@@ -10,6 +10,7 @@ public class TCPClient extends Thread {
 
     public String run(String matrikelNummer) throws IOException {
         String modifiedSentence;
+
         Socket clientSocket = new Socket("se2-isys.aau.at", 53212);
 
         DataOutputStream outputStream = new DataOutputStream(clientSocket.getOutputStream());
@@ -17,9 +18,8 @@ public class TCPClient extends Thread {
         BufferedReader inFormServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
         outputStream.writeBytes(matrikelNummer + '\n');
-        modifiedSentence = inFormServer.readLine();
 
-        System.out.println("FROM SERVER: " + modifiedSentence);
+        modifiedSentence = inFormServer.readLine();
 
         clientSocket.close();
 
@@ -42,9 +42,9 @@ public class TCPClient extends Thread {
             }
 
             if (sum % 2 == 0){
-                return "Quersumme " + sum + " ist gerade.";
+                return "Alternierende Quersumme " + sum + " ist gerade.";
             } else {
-                return "Quersumme " + sum + " ist ungerade.";
+                return "Alternierende Quersumme " + sum + " ist ungerade.";
             }
         } catch (Exception e){
             throw new RuntimeException(e);
